@@ -8,6 +8,7 @@
 volatile uint16_t turno = 0;
 volatile uint16_t pot1 = 0;
 volatile uint16_t pot2 = 0;
+uint16_t data = 0;
 
 int main() {
     
@@ -16,11 +17,7 @@ int main() {
     tim3_init();      
     for (;;) {
         // verificando el ambiente
-        if(pot2 < LED_OSCURO){
-            TIM3->CCR3 = pot1 ;
-        }else{
-            TIM3->CCR3 = 0;
-        }
+        
 
 
         // PA8
@@ -50,6 +47,20 @@ int main() {
         }else{
             GPIOA->ODR &=~(1<<12);
         }
+
+        if(turno == 0){
+            pot1 = data;
+            turno = 1; 
+        }else{
+            pot2 = data;
+            turno = 0; 
+        }
+        
+        if(pot2 < LED_OSCURO){
+            TIM3->CCR3 = pot1 ;
+        }else{
+            TIM3->CCR3 = 0;
+        }
     }
     
 
@@ -58,13 +69,6 @@ int main() {
 
 void ADC1_2_IRQHandler(){
     
-    uint16_t data = ADC1->DR;
-    if(turno == 0){
-        pot1 = data;
-        turno = 1; 
-    }else{
-        pot2 = data;
-        turno = 0; 
-    }
+    data = ADC1->DR;
     
 }
