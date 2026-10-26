@@ -10,9 +10,10 @@ volatile uint16_t pot1 = 0;
 volatile uint16_t pot2 = 0;
 
 int main() {
+    
     gpio_init();
     adc_init();
-    tim3_init();
+    tim3_init();      
     for (;;) {
         // verificando el ambiente
         if(pot2 < LED_OSCURO){
@@ -50,7 +51,10 @@ int main() {
             GPIOA->ODR &=~(1<<12);
         }
     }
+    
+
 }
+
 
 void ADC1_2_IRQHandler(){
     

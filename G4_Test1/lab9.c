@@ -35,7 +35,7 @@ void adc_init(){
   GPIOA->MODER |= (1<<3);
   GPIOA->MODER |= (1<<2);
 
-  ADC12_COMMON ->CCR &= ~(1<<17);
+  ADC12_COMMON ->CCR |= (1<<17);
   ADC12_COMMON ->CCR |= (1<<16);
   
   ADC1->CR &=~(1<<29);
